@@ -1,4 +1,5 @@
 import { publicProcedure, router } from "./trpc";
+import { createHTTPServer } from '@trpc/server/adapters/standalone';
 import { z } from "zod";
 
 const todoCreateType = z.object({
@@ -21,4 +22,12 @@ const appRoter = router({
         })
 })
 
-export type appRoter = typeof appRoter;  
+//use the adapters to server the api
+
+const server = createHTTPServer({
+    router : appRoter
+});
+server.listen(3000);
+console.log('server is runnning on port 3000')
+
+export type AppRouter = typeof appRoter;  
